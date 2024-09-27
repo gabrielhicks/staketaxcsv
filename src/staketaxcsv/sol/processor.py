@@ -71,10 +71,6 @@ def process_tx(wallet_info, exporter, txid, data):
             handle_marinade_native_staking_create_tx(wallet_info, exporter, txinfo)
 
         # Unknown programs
-        elif co.PROGRAMID_UNKNOWN_DJV in program_ids:
-            handle_djv(exporter, txinfo)
-        elif co.PROGRAMID_UNKNOWN_2KD in program_ids:
-            handle_2kd(exporter, txinfo)
 
         # Raydium programs
         elif co.PROGRAMID_RAYDIUM_LP_V2 in program_ids:
@@ -91,6 +87,8 @@ def process_tx(wallet_info, exporter, txid, data):
             handle_raydium_stake_v5(exporter, txinfo)
 
         # Orca programs
+        elif co.PROGRAMID_ORCA_SWAP_V1 in program_ids:
+            handle_djv(exporter, txinfo)
         elif co.PROGRAMID_ORCA_SWAP_V2 in program_ids or co.PROGRAMID_ORCA_SWAP_WHIRL in program_ids:
             handle_orca_swap_v2(exporter, txinfo)
 
@@ -131,6 +129,10 @@ def process_tx(wallet_info, exporter, txid, data):
         # NFT transactions
         elif is_nft_mint(txinfo):
             handle_nft_mint(exporter, txinfo)
+
+        # XCOPE to COPE Swap
+        elif co.PROGRAMID_XCOPE_COPE_SWAP in program_ids:
+            handle_2kd(exporter, txinfo)
 
         # Other
         elif co.PROGRAMID_VOTE in program_ids:
